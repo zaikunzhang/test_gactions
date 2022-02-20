@@ -75,8 +75,8 @@ jobs:
 
       - name: Run script
         if: matrix.os == 'macos-latest'
-        run: source /opt/intel/oneapi/setvars.sh
         uses: matlab-actions/run-command@v1
         with:
           command: |
+              system("source /opt/intel/oneapi/setvars.sh");
               mex('-setup', '-v', 'FORTRAN'); mex('-v', fullfile(matlabroot, 'extern', 'examples', 'refbook', 'timestwo.F')); timestwo(1); delete('timestwo.mex*');
