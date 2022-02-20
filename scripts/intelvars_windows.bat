@@ -2,8 +2,6 @@ REM SPDX-FileCopyrightText: 2020 Intel Corporation
 REM
 REM SPDX-License-Identifier: MIT
 
-setlocal EnableDelayedExpansion
-
 set LANGUAGE=%1
 set VS_VER=%2
 
@@ -21,7 +19,9 @@ echo %LATEST_VERSION%
 echo "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat"
 echo %ONEAPI_ROOT%
 where ifort.exe
+
 mklink "C:\Windows\ifort.exe" "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe"
+setx ONEAPI_ROOT "C:\Program Files (x86)\Intel\oneAPI\" /M
 setx FORT_COMPILER21 "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe" /M
-echo "ONEAPI_ROOT=%ONEAPI_ROOT%"  >> %GITHUB_ENV%
-echo "FORT_COMPILER21=%FORT_COMPILER21%" >> %GITHUB_ENV%
+echo "ONEAPI_ROOT=!ONEAPI_ROOT!"  >> %GITHUB_ENV%
+echo "FORT_COMPILER21=!FORT_COMPILER21!" >> %GITHUB_ENV%
