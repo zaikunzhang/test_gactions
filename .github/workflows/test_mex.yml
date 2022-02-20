@@ -48,9 +48,7 @@ jobs:
       - name: Run vars.bat
         if: matrix.os == 'windows-latest'
         run: |
-          cmd.exe "/K" '"C:\Program Files (x86)\Intel\oneAPI\compiler\2022.1.0\env\vars.bat" && powershell'
-          #for /f "tokens=* usebackq" %%f in (`dir /b "C:\Program Files (x86)\Intel\oneAPI\compiler\" ^| findstr /V latest ^| sort`) do @set "LATEST_VERSION=%%f"
-          #@call "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat"
+          cmd.exe "/K" '"scripts/ifortvars_windows.bat" && powershell'
 
       - name: prepare for cache restore for Intel oneAPI on macOS
         if: matrix.os == 'macOS-latest'
