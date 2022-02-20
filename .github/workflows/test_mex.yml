@@ -45,6 +45,11 @@ jobs:
         if: matrix.os == 'windows-latest' && steps.cache-install-windows.outputs.cache-hit != 'true'
         shell: bash
         run: scripts/cache_exclude_windows.sh
+      - name: Run vars.bat
+        if: matrix.os == 'windows-latest'
+        run: |
+          for /f "tokens=* usebackq" %%f in (`dir /b "C:\Program Files (x86)\Intel\oneAPI\compiler\" ^| findstr /V latest ^| sort`) do @set "LATEST_VERSION=%%f"
+          @call "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat"
 
       - name: prepare for cache restore for Intel oneAPI on macOS
         if: matrix.os == 'macOS-latest'
@@ -61,6 +66,9 @@ jobs:
       - name: install Intel oneAPI on macOS
         if: matrix.os == 'macOS-latest' && steps.cache-install-macos.outputs.cache-hit != 'true'
         run: scripts/install_macos.sh $MACOS_HPCKIT_URL $MACOS_FORTRAN_COMPONENTS
+      - name: Run setvars.sh
+        if: matrix.os == 'macos-latest'
+        run: source /opt/intel/oneapi/setvars.sh
 
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v1.1.0
