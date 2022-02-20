@@ -2,7 +2,7 @@ name: Test MATLAB MEX Fortran on macOS and Windows
 
 on:
   # Trigger the workflow on push or pull request
-  #push:
+  push:
   #pull_request:  # DANGEROUS! MUST be disabled for self-hosted runners!
   # Trigger the workflow by cron. The default time zone of GitHub Actions is UTC.
   #schedule:
@@ -48,7 +48,7 @@ jobs:
       - name: Run vars.bat
         if: matrix.os == 'windows-latest'
         run: |
-          cmd.exe "/K" '"C:\Program Files (x86)\Intel\oneAPI\setvars.bat" && powershell'
+          cmd.exe "/K" '"C:\Program Files (x86)\Intel\oneAPI\compiler\2022.1.0\env\vars.bat" && powershell'
           #for /f "tokens=* usebackq" %%f in (`dir /b "C:\Program Files (x86)\Intel\oneAPI\compiler\" ^| findstr /V latest ^| sort`) do @set "LATEST_VERSION=%%f"
           #@call "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat"
 
