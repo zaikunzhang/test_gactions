@@ -1,4 +1,4 @@
-name: Test Intel oneAPI: Fortran
+name: Test Intel oneAPI Fortran
 
 on:
   push:
