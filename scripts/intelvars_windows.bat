@@ -20,12 +20,5 @@ echo "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat
 where ifort.exe
 
 mklink "C:\Windows\ifort.exe" "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe"
-
-setx ONEAPI_ROOT "C:\Program Files (x86)\Intel\oneAPI\" /M
-echo %ONEAPI_ROOT%
-
-setx FORT_COMPILER21 "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe" /M
-echo "%FORT_COMPILER21%"
-
 echo ONEAPI_ROOT=C:\Program Files (x86)\Intel\oneAPI\  >> %GITHUB_ENV%
-echo FORT_COMPILER21=C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe >> %GITHUB_ENV%
+echo FORT_COMPILER21=C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\ >> %GITHUB_ENV%
