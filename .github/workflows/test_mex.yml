@@ -68,7 +68,9 @@ jobs:
         run: scripts/install_macos.sh $MACOS_HPCKIT_URL $MACOS_FORTRAN_COMPONENTS
       - name: Run setvars.sh
         if: matrix.os == 'macos-latest'
-        run: source /opt/intel/oneapi/setvars.sh
+        run: |
+            source /opt/intel/oneapi/setvars.sh
+            PATH=$PATH:$(dirname $(which ifort))
 
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v1.1.0
@@ -78,5 +80,4 @@ jobs:
         uses: matlab-actions/run-command@v1
         with:
           command: |
-              system("source /opt/intel/oneapi/setvars.sh");
               mex('-setup', '-v', 'FORTRAN'); mex('-v', fullfile(matlabroot, 'extern', 'examples', 'refbook', 'timestwo.F')); timestwo(1); delete('timestwo.mex*');
