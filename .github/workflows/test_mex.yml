@@ -74,6 +74,8 @@ jobs:
         uses: matlab-actions/setup-matlab@v1.1.0
 
       - name: Run script
+        if: matrix.os == 'macos-latest'
+        run: source /opt/intel/oneapi/setvars.sh
         uses: matlab-actions/run-command@v1
         with:
           command: |
