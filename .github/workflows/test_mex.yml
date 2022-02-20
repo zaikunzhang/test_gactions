@@ -45,7 +45,7 @@ jobs:
         if: matrix.os == 'windows-latest' && steps.cache-install-windows.outputs.cache-hit != 'true'
         shell: bash
         run: scripts/cache_exclude_windows.sh
-      - name: Run vars.bat
+      - name: Run intelvars_windows.bat
         if: matrix.os == 'windows-latest'
         run: |
           cmd.exe "/K" '"scripts/intelvars_windows.bat" && powershell'
@@ -81,5 +81,5 @@ jobs:
         with:
           command: |
               setenv('ONEAPI_ROOT', 'C:\Program Files (x86)\Intel\oneAPI\');
-              setenv('IFORT_COMPILER21', 'C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2\windows\bin\intel64\ifort.exe');
+              setenv('IFORT_COMPILER21', 'C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2\windows\');
               mex('-setup', '-v', 'FORTRAN'); mex('-v', fullfile(matlabroot, 'extern', 'examples', 'refbook', 'timestwo.F')); timestwo(1)
