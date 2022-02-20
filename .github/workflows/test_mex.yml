@@ -48,7 +48,7 @@ jobs:
       - name: Run vars.bat
         if: matrix.os == 'windows-latest'
         run: |
-            cmd.exe "/K" '"scripts/intelvars_windows.bat"'
+          cmd.exe "/K" '"scripts/intelvars_windows.bat" && powershell'
 
       - name: prepare for cache restore for Intel oneAPI on macOS
         if: matrix.os == 'macOS-latest'
