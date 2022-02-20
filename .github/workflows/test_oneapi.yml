@@ -1,7 +1,7 @@
 name: Test Intel oneAPI
 
 on:
-  push
+  push:
   workflow_dispatch:
 
 env:
