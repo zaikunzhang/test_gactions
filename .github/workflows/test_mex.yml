@@ -81,4 +81,5 @@ jobs:
         with:
           command: |
               setenv('ONEAPI_ROOT', 'C:\Program Files (x86)\Intel\oneAPI\');
+              setenv('IFORT_COMPILER21', 'C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2\windows\bin\intel64\ifort.exe');
               mex('-setup', '-v', 'FORTRAN'); mex('-v', fullfile(matlabroot, 'extern', 'examples', 'refbook', 'timestwo.F')); timestwo(1)
