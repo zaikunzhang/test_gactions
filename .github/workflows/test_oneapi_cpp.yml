@@ -1,4 +1,4 @@
-name: Test Intel oneAPI
+name: Test Intel oneAPI: CPP
 
 on:
   push:

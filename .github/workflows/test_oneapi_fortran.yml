@@ -1,4 +1,4 @@
-name: Test Intel oneAPI
+name: Test Intel oneAPI: Fortran
 
 on:
   push:
@@ -24,21 +24,21 @@ jobs:
         shell: bash
     steps:
     - uses: actions/checkout@v2
-    - name: cache install
-      id: cache-install
-      uses: actions/cache@v2
-      with:
-        path: C:\Program Files (x86)\Intel\oneAPI\compiler
-        key: install-${{ env.WINDOWS_HPCKIT_URL }}-${{ env.WINDOWS_FORTRAN_COMPONENTS }}-compiler-${{ hashFiles('**/scripts/cache_exclude_windows.sh') }}
+    # - name: cache install
+    #   id: cache-install
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: C:\Program Files (x86)\Intel\oneAPI\compiler
+    #     key: install-${{ env.WINDOWS_HPCKIT_URL }}-${{ env.WINDOWS_FORTRAN_COMPONENTS }}-compiler-${{ hashFiles('**/scripts/cache_exclude_windows.sh') }}
     - name: install
-      if: steps.cache-install.outputs.cache-hit != 'true'
+      #if: steps.cache-install.outputs.cache-hit != 'true'
       run: scripts/install_windows.bat $WINDOWS_HPCKIT_URL $WINDOWS_FORTRAN_COMPONENTS
     - name: build
       run: scripts/build_windows.bat fortran "" $SAMPLES_TAG
-    - name: exclude unused files from cache
-      if: steps.cache-install.outputs.cache-hit != 'true'
-      shell: bash
-      run: scripts/cache_exclude_windows.sh
+    # - name: exclude unused files from cache
+    #   if: steps.cache-install.outputs.cache-hit != 'true'
+    #   shell: bash
+    #   run: scripts/cache_exclude_windows.sh
 
   build_linux_fortran:
     runs-on: ubuntu-20.04
@@ -47,21 +47,21 @@ jobs:
         shell: bash
     steps:
     - uses: actions/checkout@v2
-    - name: cache install
-      id: cache-install
-      uses: actions/cache@v2
-      with:
-        path: |
-          /opt/intel/oneapi/compiler
-        key: install-${{ env.LINUX_HPCKIT_URL }}-${{ env.LINUX_FORTRAN_COMPONENTS_WEB }}-compiler-${{ hashFiles('**/scripts/cache_exclude_linux.sh') }}
+    # - name: cache install
+    #   id: cache-install
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: |
+    #       /opt/intel/oneapi/compiler
+    #     key: install-${{ env.LINUX_HPCKIT_URL }}-${{ env.LINUX_FORTRAN_COMPONENTS_WEB }}-compiler-${{ hashFiles('**/scripts/cache_exclude_linux.sh') }}
     - name: install
-      if: steps.cache-install.outputs.cache-hit != 'true'
+      #if: steps.cache-install.outputs.cache-hit != 'true'
       run: scripts/install_linux.sh $LINUX_HPCKIT_URL $LINUX_FORTRAN_COMPONENTS_WEB
     - name: build
       run: scripts/build_linux.sh fortran $SAMPLES_TAG
-    - name: exclude unused files from cache
-      if: steps.cache-install.outputs.cache-hit != 'true'
-      run: scripts/cache_exclude_linux.sh
+    # - name: exclude unused files from cache
+    #   if: steps.cache-install.outputs.cache-hit != 'true'
+    #   run: scripts/cache_exclude_linux.sh
 
   build_macos_fortran:
     runs-on: macos-latest
@@ -70,18 +70,18 @@ jobs:
         shell: bash
     steps:
     - uses: actions/checkout@v2
-    - name: prepare for cache restore
-      run: |
-        sudo mkdir -p /opt/intel
-        sudo chown $USER /opt/intel
-    - name: cache install
-      id: cache-install
-      uses: actions/cache@v2
-      with:
-        path: /opt/intel/oneapi
-        key: install-${{ env.MACOS_HPCKIT_URL }}-${{ env.MACOS_FORTRAN_COMPONENTS }}
+    # - name: prepare for cache restore
+    #   run: |
+    #     sudo mkdir -p /opt/intel
+    #     sudo chown $USER /opt/intel
+    # - name: cache install
+    #   id: cache-install
+    #   uses: actions/cache@v2
+    #   with:
+    #     path: /opt/intel/oneapi
+    #     key: install-${{ env.MACOS_HPCKIT_URL }}-${{ env.MACOS_FORTRAN_COMPONENTS }}
     - name: install
-      if: steps.cache-install.outputs.cache-hit != 'true'
+      #if: steps.cache-install.outputs.cache-hit != 'true'
       run: scripts/install_macos.sh $MACOS_HPCKIT_URL $MACOS_FORTRAN_COMPONENTS
     - name: build
       run: scripts/build_macos.sh fortran $SAMPLES_TAG
