@@ -70,7 +70,8 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: |
             source /opt/intel/oneapi/setvars.sh
-            sudo ln -s  $(which ifort) /usr/bin
+            sudo mkdir -p /usr/local/bin
+            sudo ln -s $(which ifort) /usr/local/bin
             PATH=$PATH:$(dirname $(which ifort))
 
       - name: Set up MATLAB
