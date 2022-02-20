@@ -49,10 +49,6 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           cmd.exe "/K" '"scripts/intelvars_windows.bat" && powershell'
-          echo "ONEAPI_ROOT=%ONEAPI_ROOT%"  >> $GITHUB_ENV
-          echo "FORT_COMPILER21=%FORT_COMPILER21%" >> $GITHUB_ENV
-          echo "$ONEAPI_ROOT"
-          echo "$FORT_COMPILER21"
 
       - name: prepare for cache restore for Intel oneAPI on macOS
         if: matrix.os == 'macOS-latest'
