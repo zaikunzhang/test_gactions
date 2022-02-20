@@ -76,7 +76,6 @@ jobs:
         uses: matlab-actions/setup-matlab@v1.1.0
 
       - name: Run script
-        if: matrix.os == 'windows-latest'
         uses: matlab-actions/run-command@v1
         with:
           command: |
