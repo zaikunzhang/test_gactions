@@ -19,5 +19,6 @@ echo %LATEST_VERSION%
 echo "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat"
 echo %ONEAPI_ROOT%
 where ifort.exe
-mklink /D "C:\Program Files (x86)\Intel\oneAPI\compiler\latest" "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%"
+mklink "C:\Windows\ifort.ext" "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe"
 setx ONEAPI_ROOT "C:\Program Files (x86)\Intel\oneAPI\" /M
+setx FORT_COMPILER21 "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe" /M
