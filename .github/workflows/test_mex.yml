@@ -48,8 +48,9 @@ jobs:
       - name: Run vars.bat
         if: matrix.os == 'windows-latest'
         run: |
-          for /f "tokens=* usebackq" %%f in (`dir /b "C:\Program Files (x86)\Intel\oneAPI\compiler\" ^| findstr /V latest ^| sort`) do @set "LATEST_VERSION=%%f"
-          @call "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat"
+          cmd.exe "/K" '"C:\Program Files (x86)\Intel\oneAPI\setvars.bat" && powershell'
+          #for /f "tokens=* usebackq" %%f in (`dir /b "C:\Program Files (x86)\Intel\oneAPI\compiler\" ^| findstr /V latest ^| sort`) do @set "LATEST_VERSION=%%f"
+          #@call "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat"
 
       - name: prepare for cache restore for Intel oneAPI on macOS
         if: matrix.os == 'macOS-latest'
@@ -66,20 +67,19 @@ jobs:
       - name: install Intel oneAPI on macOS
         if: matrix.os == 'macOS-latest' && steps.cache-install-macos.outputs.cache-hit != 'true'
         run: scripts/install_macos.sh $MACOS_HPCKIT_URL $MACOS_FORTRAN_COMPONENTS
-      - name: Run setvars.sh
+      - name: Run setvars.sh and link ifort to /usr/local/bin
         if: matrix.os == 'macos-latest'
         run: |
             source /opt/intel/oneapi/setvars.sh
             sudo mkdir -p /usr/local/bin
             sudo ln -s $(which ifort) /usr/local/bin
-            PATH=$PATH:$(dirname $(which ifort))
 
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v1.1.0
 
       - name: Run script
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'windows-latest'
         uses: matlab-actions/run-command@v1
         with:
           command: |
-              mex('-setup', '-v', 'FORTRAN'); mex('-v', fullfile(matlabroot, 'extern', 'examples', 'refbook', 'timestwo.F')); timestwo(1); delete('timestwo.mex*');
+              mex('-setup', '-v', 'FORTRAN'); mex('-v', fullfile(matlabroot, 'extern', 'examples', 'refbook', 'timestwo.F')); timestwo(1)
