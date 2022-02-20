@@ -19,3 +19,4 @@ echo %LATEST_VERSION%
 echo "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat"
 echo %ONEAPI_ROOT%
 where ifort.exe
+$env:Path += "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64"
