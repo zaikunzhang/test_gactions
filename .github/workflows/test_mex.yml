@@ -47,7 +47,6 @@ jobs:
         run: scripts/cache_exclude_windows.sh
       - name: Run intelvars_windows.bat
         if: matrix.os == 'windows-latest'
-        shell: bash
         run: |
           cmd.exe "/K" '"scripts/intelvars_windows.bat" && powershell'
           echo "ONEAPI_ROOT=%ONEAPI_ROOT%"  >> $GITHUB_ENV
