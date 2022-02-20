@@ -27,5 +27,5 @@ echo %ONEAPI_ROOT%
 setx FORT_COMPILER21 "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe" /M
 echo "%FORT_COMPILER21%"
 
-echo "ONEAPI_ROOT=C:\Program Files (x86)\Intel\oneAPI\"  >> %GITHUB_ENV%
-echo "FORT_COMPILER21=C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe" >> %GITHUB_ENV%
+echo ONEAPI_ROOT=C:\Program Files (x86)\Intel\oneAPI\  >> %GITHUB_ENV%
+echo FORT_COMPILER21=C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe >> %GITHUB_ENV%
