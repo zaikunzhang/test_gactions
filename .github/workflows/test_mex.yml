@@ -49,8 +49,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: bash
         run: |
-          chmod u+x scripts/intelvars_windows.bat
-          scripts/intelvars_windows.bat
+          cmd.exe "/K" '"scripts/intelvars_windows.bat" && powershell'
           echo "ONEAPI_ROOT=%ONEAPI_ROOT%"  >> $GITHUB_ENV
           echo "FORT_COMPILER21=%FORT_COMPILER21%" >> $GITHUB_ENV
           echo "$ONEAPI_ROOT"
