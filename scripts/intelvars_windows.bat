@@ -7,5 +7,6 @@ where ifort.exe
 
 echo ONEAPI_ROOT=C:\Program Files (x86)\Intel\oneAPI>> %GITHUB_ENV%
 echo ONEAPI_VER=%LATEST_VERSION%>> %GITHUB_ENV%
+echo PATH=%PATH%;%ONEAPI_ROOT%\compiler\%LATEST_VERSION%\windows\bin\intel64>> %GITHUB_ENV%
 echo IFORT_COMPILER21=C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows>> %GITHUB_ENV%
 mklink "C:\Windows\ifort.exe" "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe"
