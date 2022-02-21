@@ -8,7 +8,7 @@ where ifx.exe
 
 echo ONEAPI_ROOT=C:\Program Files (x86)\Intel\oneAPI>> %GITHUB_ENV%
 echo ONEAPI_VER=%LATEST_VERSION%>> %GITHUB_ENV%
-echo PATH=%PATH%;%ONEAPI_ROOT%\compiler\%LATEST_VERSION%\windows\bin\intel64>> %GITHUB_ENV%
+echo PATH=%PATH%;%ONEAPI_ROOT%\compiler\%LATEST_VERSION%\windows\bin\intel64;%ONEAPI_ROOT%\compiler\%LATEST_VERSION%\windows\bin>> %GITHUB_ENV%
 echo IFORT_COMPILER21=C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows>> %GITHUB_ENV%
-mklink "C:\Windows\ifort.exe" "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifort.exe"
-mklink "C:\Windows\ifx.exe" "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\windows\bin\intel64\ifx.exe"
+for /f usebackq %F in (`where ifort.exe`) do mklink "C:\Windows\ifort.exe" %F
+for /f usebackq %F in (`where ifx.exe`) do mklink "C:\Windows\ifx.exe" %F
