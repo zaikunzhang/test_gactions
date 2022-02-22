@@ -1,4 +1,4 @@
-mklink /D "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise" "C:\Program Files\Microsoft Visual Studio\2022\Enterprise"
+mklink /D "C:\Program Files (x86)\Microsoft Visual Studio\2019" "C:\Program Files\Microsoft Visual Studio\2022"
 
 for /f "tokens=* usebackq" %%f in (`dir /b "C:\Program Files (x86)\Intel\oneAPI\compiler\" ^| findstr /V latest ^| sort`) do @set "LATEST_VERSION=%%f"
 @call "C:\Program Files (x86)\Intel\oneAPI\compiler\%LATEST_VERSION%\env\vars.bat"
