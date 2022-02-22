@@ -9,7 +9,7 @@ echo %LATEST_VERSION%
 where ifort.exe
 where ifx.exe
 
-setx "ONEAPI_ROOT" "C:\Program Files (x86)\Intel\oneAPI" /M
+set "ONEAPI_ROOT" "C:\Program Files (x86)\Intel\oneAPI"
 echo "ONEAPI_ROOT=%ONEAPI_ROOT%" >> %GITHUB_ENV%
 echo "ONEAPI_VER=%LATEST_VERSION%" >> %GITHUB_ENV%
 echo "PATH=%PATH%;%ONEAPI_ROOT%\compiler\%LATEST_VERSION%\windows\bin\intel64;%ONEAPI_ROOT%\compiler\%LATEST_VERSION%\windows\bin" >> %GITHUB_ENV%
