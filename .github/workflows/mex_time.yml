@@ -34,12 +34,12 @@ jobs:
           command: |
               tic;
               mex('-setup', '-v', 'C');
-              fprintf('\nTime for setting MEX up:\n', toc);
+              fprintf('\nTime for setting MEX up %f:\n', toc);
               tic
               mex('-v', fullfile(matlabroot, 'extern', 'examples', 'refbook', 'timestwo.c'));
-              fprintf('\nTime for mexifying timestwo:\n', toc);
+              fprintf('\nTime for mexifying timestwo %f:\n', toc);
               tic
               for i = 1, 100
                   timestwo(i);
               end
-              fprintf('\nTime for 100 runs of timestwo:\n', toc);
+              fprintf('\nTime for 100 runs of timestwo: %f\n', toc);
