@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ ! -d ~/local/cutesif ]] ;then
+    cd /tmp/ && rm -rf cutesif && git clone https://github.com/zaikunzhang/cutesif
+    mkdir -p ~/local
+    mv /tmp/cutesif/cutesif.7z ~/local
+    cd ~/local && 7z x cutesif.7z
+fi
