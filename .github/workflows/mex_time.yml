@@ -46,7 +46,7 @@ jobs:
         if: matrix.os == 'macos-latest' && matrix.latest == 'Fortran' && steps.cache-install-macos.outputs.cache-hit != 'true'
         run: scripts/install_macos.sh $MACOS_HPCKIT_URL $MACOS_FORTRAN_COMPONENTS
       - name: Run setvars.sh make symlinks for ifort and ifx on macOS
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'macos-latest' && matrix.latest == 'Fortran'
         run: |
             source /opt/intel/oneapi/setvars.sh
             sudo mkdir -p /usr/local/bin
