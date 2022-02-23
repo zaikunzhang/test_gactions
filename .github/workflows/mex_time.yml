@@ -1,0 +1,45 @@
+name: Test MATLAB MEX Fortran on macOS and Windows
+
+on:
+  # Trigger the workflow on push or pull request
+  push:
+  #pull_request:  # DANGEROUS! MUST be disabled for self-hosted runners!
+  # Trigger the workflow by cron. The default time zone of GitHub Actions is UTC.
+  schedule:
+      - cron: '0 19 * * *'
+  # Trigger the workflow when it is manually triggered
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test MATLAB MEX on macOS and Windows
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        bitness: [32, 64]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v1.1.0
+
+      - name: Run script
+        uses: matlab-actions/run-command@v1
+        with:
+          command: |
+              tic;
+              mex('-setup', '-v', 'C');
+              fprintf('\nTime for setting MEX up:\n', toc);
+              tic
+              mex('-v', fullfile(matlabroot, 'extern', 'examples', 'refbook', 'timestwo.c'));
+              fprintf('\nTime for mexifying timestwo:\n', toc);
+              tic
+              for i = 1, 100
+                  timestwo(i)
+              end
+              printf('\nTime for 100 runs of timestwo:\n', toc);
