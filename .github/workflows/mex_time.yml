@@ -60,7 +60,7 @@ jobs:
         uses: matlab-actions/run-command@v1
         with:
           command: |
-              lang = '${{ matlab.language }}';
+              lang = '${{ matrix.language }}';
               if strcmp(lang, 'Fortran')
                   timestwo_src = 'timestwo.F';
               else
