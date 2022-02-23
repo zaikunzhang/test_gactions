@@ -40,6 +40,6 @@ jobs:
               fprintf('\nTime for mexifying timestwo:\n', toc);
               tic
               for i = 1, 100
-                  timestwo(i)
+                  timestwo(i);
               end
               fprintf('\nTime for 100 runs of timestwo:\n', toc);
