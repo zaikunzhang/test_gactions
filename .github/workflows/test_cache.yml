@@ -57,6 +57,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /usr/local/MATLAB/
+          key:  ${{ runner.os }}-${{ hashFiles('**/.github/scripts/cache_exclude_matlab_ubuntu.sh') }}
 
       - name: Set up MATLAB
         if: steps.cache-install-matlab.outputs.cache-hit != 'true'
