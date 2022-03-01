@@ -1,0 +1,63 @@
+name: Test Cache
+
+on:
+  # Trigger the workflow on push or pull request
+  push:
+  #pull_request:  # DANGEROUS! MUST be disabled for self-hosted runners!
+  # Trigger the workflow by cron. The default time zone of GitHub Actions is UTC.
+  #schedule:
+  #    - cron: '0 19 * * *'
+  # Trigger the workflow when it is manually triggered
+  workflow_dispatch:
+
+env:
+  WINDOWS_BASEKIT_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18497/w_BaseKit_p_2022.1.2.154_offline.exe
+  WINDOWS_HPCKIT_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18529/w_HPCKit_p_2022.1.2.116_offline.exe
+  MACOS_HPCKIT_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18341/m_HPCKit_p_2022.1.0.86_offline.dmg
+  WINDOWS_FORTRAN_COMPONENTS: intel.oneapi.win.ifort-compiler
+  MACOS_FORTRAN_COMPONENTS: intel.oneapi.mac.ifort-compiler
+
+jobs:
+  test:
+    name: Test MATLAB MEX on macOS and Windows
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+
+      - name: cache install Intel oneAPI on Windows
+        if: startsWith(matrix.os, 'windows')
+        id: cache-install-windows
+        uses: actions/cache@v2
+        with:
+          path: C:\Program Files (x86)\Intel\oneAPI\compiler
+          key: install-${{ env.WINDOWS_HPCKIT_URL }}-${{ env.WINDOWS_FORTRAN_COMPONENTS }}-compiler-${{ hashFiles('**/.github/scripts/cache_exclude_oneapi_windows.sh') }}
+      - name: install Intel oneAPI on Windows
+        if: startsWith(matrix.os, 'windows') && steps.cache-install-windows.outputs.cache-hit != 'true'
+        shell: bash
+        run: .github/scripts/install_oneapi_windows.bat $WINDOWS_HPCKIT_URL $WINDOWS_FORTRAN_COMPONENTS
+      - name: exclude unused files from cache for Intel oneAPI on Windows
+        if: startsWith(matrix.os, 'windows') && steps.cache-install-windows.outputs.cache-hit != 'true'
+        shell: bash
+        run: .github/scripts/cache_exclude_oneapi_windows.sh
+      - name: Run intelvars_windows.bat
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          cmd.exe "/K" '".github/scripts/intelvars_windows.bat" && powershell'
+
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v1.1.0
+
+      - name: Run script
+        uses: matlab-actions/run-command@v1
+        with:
+          command: |
+             matlabroot
+             system('which matlab')
+             system('type matlab')
