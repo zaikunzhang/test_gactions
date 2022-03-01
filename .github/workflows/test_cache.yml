@@ -54,7 +54,7 @@ jobs:
       - name: cache install MATLAB
         if: startsWith(matrix.os, 'ubuntu')
         id: cache-install-matlab
-        uses: actions/cache@2
+        uses: actions/cache@v2
         with:
           path: /usr/local/MATLAB/
 
