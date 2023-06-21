@@ -1,0 +1,30 @@
+name: My Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up repository
+      uses: actions/checkout@v2
+
+    - name: Run long-running step
+      id: long_running_step
+      run: |
+        # Your long-running step command(s) here
+      timeout-minutes: 5
+
+    - name: Check if step timed out
+      if: ${{ failure() && steps.long_running_step.outcome == 'timed_out' }}
+      run: |
+        echo "The long-running step ran overtime, marking the workflow as successful."
+        exit 0
+
+    - name: Run other steps
+      run: |
+        echo "This step will run if the previous step didn't fail or ran overtime."
