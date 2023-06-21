@@ -13,9 +13,8 @@ jobs:
 
     - name: Run long-running step
       id: long_running_step
-      run: |
-        # Your long-running step command(s) here
-      timeout-minutes: 10
+      run: while [[ 1==1 ]] ; do echo "\nrunning\n" ; done
+      timeout-minutes: 1
 
     - name: Check if step timed out
       if: ${{ failure() && steps.long_running_step.outcome == 'timed_out' }}
