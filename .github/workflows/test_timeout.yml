@@ -13,13 +13,15 @@ jobs:
 
     - name: Run long-running step
       id: long_running_step
-      run: while [[ 1==1 ]] ; do echo "running" ; done
+      run: while [[ 1==1 ]] ; do ; done
       timeout-minutes: 1
 
     - name: Check if step timed out
-      if: ${{ failure() && steps.long_running_step.outcome == 'cancelled' }}
+      if: ${{ failure() }}
+        # && steps.long_running_step.outcome == 'cancelled' }}
       run: |
-        echo "The long-running step ran overtime, marking the workflow as successful."
+        echo ${{ steps.long_running_step.outcome }}
+        "The long-running step ran overtime, marking the workflow as successful."
         exit 0
 
     - name: Run other steps
