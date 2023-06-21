@@ -15,7 +15,7 @@ jobs:
       id: long_running_step
       run: |
         # Your long-running step command(s) here
-      timeout-minutes: 5
+      timeout-minutes: 1
 
     - name: Check if step timed out
       if: ${{ failure() && steps.long_running_step.outcome == 'timed_out' }}
