@@ -1,30 +1,35 @@
-name: My Workflow
-
+name: stress test
 on:
   push:
-
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    continue-on-error: true
+    timeout-minutes: 1
     steps:
-    - name: Set up repository
-      uses: actions/checkout@v2
-
-    - name: Run long-running step
-      id: long_running_step
-      run: while [[ 1==1 ]] ; do echo "running" > /dev/null ; done
-      timeout-minutes: 1
-
-    - name: Check if step timed out
-      if: ${{ failure() }}
-        # && steps.long_running_step.outcome == 'cancelled' }}
-      run: |
-        echo $?
-        echo ${{ steps.long_running_step.outcome }}
-        echo "The long-running step ran overtime, marking the workflow as successful."
-        exit 0
-
-    - name: Run other steps
-      run: |
-        echo "This step will run if the previous step didn't fail or ran overtime."
+      - run: sleep 2m
+  checkfailure:
+    runs-on: ubuntu-latest
+    if: ${{ !cancelled() }}
+    needs: build
+    steps:
+      - name: Install jq
+        run: sudo apt update && sudo apt install -y jq
+      - name: check workflow jobs
+        run: |
+          curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs \
+          > jobs.json
+        status=$(jq '.jobs[0].conclusion' jobs.json)
+        if [[ "$status" == "failure" ]]; then
+           echo "Workflow failed before timeout"
+           exit 1
+        elif [[ "$status" == "cancelled" ]]; then
+           echo "Workflow timed out but considered successful"
+           exit 0
+        else
+           echo "Workflow completed successfully"
+           exit 0
+        fi
