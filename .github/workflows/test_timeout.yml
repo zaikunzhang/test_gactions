@@ -20,6 +20,7 @@ jobs:
       if: ${{ failure() }}
         # && steps.long_running_step.outcome == 'cancelled' }}
       run: |
+        echo $?
         echo ${{ steps.long_running_step.outcome }}
         echo "The long-running step ran overtime, marking the workflow as successful."
         exit 0
